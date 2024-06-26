@@ -1,17 +1,12 @@
 class Solution(object):
     def lengthOfLongestSubstring(self, s):
-        d = ""
-        for i in range (1,len(s)):
-            count = 0
-            for j in range (len(d)):
-                if s[i] == d[j]:
-                    count = 1
-                    break
-            if count == 0:
-                d = d + s[i]           
-        return len(d)
-
-sol = Solution()
-s = "abcabcbb"
-result = sol.lengthOfLongestSubstring(s)
-print("The answer is ",result)      
+        char_set = set()
+        left = 0
+        max_length = 0
+        for right in range(len(s)):
+            while s[right] in char_set:
+                char_set.remove(s[left])
+                left += 1
+            char_set.add(s[right])
+            max_length = max(max_length, right - left + 1)
+        return max_length
